@@ -1,45 +1,40 @@
 import java.util.*;
 
 public class EligibilityEngine {
-    private final FakeEligibilityStore store;
+    private final Store store;
 
-    public EligibilityEngine(FakeEligibilityStore store) { this.store = store; }
+    public EligibilityEngine(Store store) { this.store = store; }
 
     public void runAndPrint(StudentProfile s) {
         ReportPrinter p = new ReportPrinter();
         EligibilityEngineResult r = evaluate(s); // giant conditional inside
         p.print(s, r);
-        store.save(s.rollNo, r.status);
+       store.save(s.rollNo, r.status);
     }
 
     public EligibilityEngineResult evaluate(StudentProfile s) {
         List<String> reasons = new ArrayList<>();
-        String status = "ELIGIBLE";
+        AttendanceViolation av = new AttendanceViolation(s);
+        CgrViolation cgv = new CgrViolation(s);
+        CreditsViolation crv = new CreditsViolation(s);
+        DisciplinaryViolation dv = new DisciplinaryViolation(s);
 
-        // OCP violation: long chain for each rule
-        if (s.disciplinaryFlag != LegacyFlags.NONE) {
-            status = "NOT_ELIGIBLE";
-            reasons.add("disciplinary flag present");
-        } else if (s.cgr < 8.0) {
-            status = "NOT_ELIGIBLE";
-            reasons.add("CGR below 8.0");
-        } else if (s.attendancePct < 75) {
-            status = "NOT_ELIGIBLE";
-            reasons.add("attendance below 75");
-        } else if (s.earnedCredits < 20) {
-            status = "NOT_ELIGIBLE";
-            reasons.add("credits below 20");
+        List<Violation> list = new ArrayList<>();
+        list.add(dv);
+        list.add(cgv);
+        list.add(av);
+        list.add(crv);
+
+        String status = "ELIGIBLE";
+        for(Violation v : list){
+            if(v.isViolation()){
+                reasons.add(v.getFailureReason());
+                status = "NOT_ELIGIBLE";
+                break;
+            }
         }
 
         return new EligibilityEngineResult(status, reasons);
     }
 }
 
-class EligibilityEngineResult {
-    public final String status;
-    public final List<String> reasons;
-    public EligibilityEngineResult(String status, List<String> reasons) {
-        this.status = status;
-        this.reasons = reasons;
-    }
-}
