@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MinutesBook {
+public class MinutesBook  {
     private final List<String> items = new ArrayList<>();
     public void add(String text) {
         items.add(text);
