@@ -5,5 +5,6 @@ public class BudgetLedger {
         if (amt >= 0) System.out.println("Ledger: +" + (int)amt + " (" + note + ")");
         else System.out.println("Ledger: " + (int)amt + " (" + note + ")");
     }
+    
     public int balanceInt() { return (int)balance; }
 }
