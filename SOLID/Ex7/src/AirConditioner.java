@@ -1,4 +1,4 @@
-public class AirConditioner implements PowerControl, TemperatureControl , SmartClassroomDevice {
+public class AirConditioner implements  TemperatureControl , SmartClassroomDevice {
 
     public void powerOn() { }
     public void powerOff() { System.out.println("AC OFF"); }

@@ -1,4 +1,4 @@
-public class Projector implements PowerControl, InputConnectable {
+public class Projector implements SmartClassroomDevice, InputConnectable {
     private boolean on;
 
     public void powerOn() { on = true; }

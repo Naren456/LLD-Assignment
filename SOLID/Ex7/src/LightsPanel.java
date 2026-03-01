@@ -1,4 +1,4 @@
-public class LightsPanel implements PowerControl, BrightnessControl,SmartClassroomDevice {
+public class LightsPanel implements  BrightnessControl,SmartClassroomDevice {
 
     public void powerOn() { /* always on */ }
     public void powerOff() { System.out.println("Lights OFF"); }

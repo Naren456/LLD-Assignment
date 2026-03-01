@@ -1,4 +1,4 @@
-public class AttendanceScanner implements PowerControl, AttendanceCapable ,SmartClassroomDevice {
+public class AttendanceScanner implements AttendanceCapable ,SmartClassroomDevice {
 
     public void powerOn() { }
     public void powerOff() { }
