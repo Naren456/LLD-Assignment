@@ -2,7 +2,12 @@ import java.nio.charset.StandardCharsets;
 
 public class PdfExporter extends Exporter {
 
-    private final Formatter formatter = new PdfFormatter();
+    private final Formatter formatter;
+	
+
+    public PdfExporter(Formatter formatter) {
+        this.formatter = formatter;
+    }
 
     @Override
     protected ExportResult doExport(ExportRequest req) {

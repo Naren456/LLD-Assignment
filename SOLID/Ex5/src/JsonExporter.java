@@ -2,8 +2,12 @@ import java.nio.charset.StandardCharsets;
 
 public class JsonExporter extends Exporter {
 
-    private final Formatter formatter = new JsonFormatter();
+    private final Formatter formatter;
+	
 
+    public JsonExporter(Formatter formatter) {
+        this.formatter = formatter;
+    }
     @Override
     protected ExportResult doExport(ExportRequest req) {
 
