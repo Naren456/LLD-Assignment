@@ -14,7 +14,6 @@ public class OrderService {
     public String charge(String provider, String customerId, int amountCents) {
         Objects.requireNonNull(provider, "provider");
         PaymentGateway gw = gateways.get(provider);
-        if (gw == null) throw new IllegalArgumentException("unknown provider: " + provider);
         return gw.charge(customerId, amountCents);
     }
 }
