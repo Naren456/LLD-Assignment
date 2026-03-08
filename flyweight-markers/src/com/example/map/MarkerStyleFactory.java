@@ -13,14 +13,20 @@ import java.util.Map;
  * After refactor:
  * - MapDataSource should call this factory to obtain shared MarkerStyle instances.
  */
-public class MarkerStyleFactory {
+public class  MarkerStyleFactory {
 
     private final Map<String, MarkerStyle> cache = new HashMap<>();
 
     public MarkerStyle get(String shape, String color, int size, boolean filled) {
         String key = shape + "|" + color + "|" + size + "|" + (filled ? "F" : "O");
-        // TODO: return cached instance if present; otherwise create, cache, and return.
-        return new MarkerStyle(shape, color, size, filled);
+        if(cache.containsKey(key)){
+            return  cache.get(key);
+        }
+       else {
+			MarkerStyle markerStyle = new MarkerStyle(shape, color, size, filled);
+			cache.put(key,markerStyle);
+			return markerStyle;
+		}
     }
 
     public int cacheSize() {
