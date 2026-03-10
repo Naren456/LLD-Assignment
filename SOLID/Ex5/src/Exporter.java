@@ -1,35 +1,15 @@
+// base class for all exporters
+// contract: accept any non-null request, return ExportResult (never throw)
 public abstract class Exporter {
 
-    /**
-     * Base Contract
-     *
-     * Preconditions:
-     * - request != null
-     * - request.title != null
-     * - request.body != null
-     *
-     * Postconditions:
-     * - returns ExportResult
-     * - ExportResult.bytes != null
-     * - ExportResult.contentType describes format
-     */
-
-    protected void validate(ExportRequest req) {
-        if (req == null) {
-            throw new IllegalArgumentException("request cannot be null");
-        }
-        if (req.title == null) {
-            throw new IllegalArgumentException("title cannot be null");
-        }
-        if (req.body == null) {
-            throw new IllegalArgumentException("body cannot be null");
-        }
-    }
-
+    // handles null check here so subclasses don't have to
     public ExportResult export(ExportRequest req) {
-        validate(req);
+        if (req == null) {
+            return ExportResult.error("request is null");
+        }
         return doExport(req);
     }
+
 
     protected abstract ExportResult doExport(ExportRequest req);
 }

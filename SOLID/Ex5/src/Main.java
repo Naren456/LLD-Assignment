@@ -3,21 +3,20 @@ public class Main {
         System.out.println("=== Export Demo ===");
 
         ExportRequest req = new ExportRequest("Weekly Report", SampleData.longBody());
-        Exporter pdf = new PdfExporter(new PdfFormatter());
-        Exporter csv = new CsvExporter(new CsvFormatter());
-        Exporter json = new JsonExporter(new JsonFormatter());
+        Exporter pdf = new PdfExporter();
+        Exporter csv = new CsvExporter();
+        Exporter json = new JsonExporter();
 
-        System.out.println("PDF: " + safe(pdf, req));
-        System.out.println("CSV: " + safe(csv, req));
-        System.out.println("JSON: " + safe(json, req));
+        // all exporters return results now, no need for try-catch
+        System.out.println("PDF: " + describe(pdf.export(req)));
+        System.out.println("CSV: " + describe(csv.export(req)));
+        System.out.println("JSON: " + describe(json.export(req)));
     }
 
-    private static String safe(Exporter e, ExportRequest r) {
-        try {
-            ExportResult out = e.export(r);
-            return "OK bytes=" + out.bytes.length;
-        } catch (RuntimeException ex) {
-            return "ERROR: " + ex.getMessage();
+    private static String describe(ExportResult out) {
+        if (!out.success) {
+            return "ERROR: " + out.errorMessage;
         }
+        return "OK bytes=" + out.bytes.length;
     }
 }
