@@ -1,8 +1,7 @@
-
-public class InkRefill implements Refill {
+public class BallPointRefill implements Refill {
     private boolean isEmpty;
 
-    public InkRefill() {
+    public BallPointRefill() {
         this.isEmpty = false;
     }
 
@@ -14,10 +13,6 @@ public class InkRefill implements Refill {
     @Override
     public void refill() {
         this.isEmpty = false;
-        System.out.println("Ink refilled successfully!");
-    }
-
-    public void setEmpty(boolean isEmpty) {
-        this.isEmpty = isEmpty;
+        System.out.println("Ballpoint pen refilled successfully!");
     }
 }

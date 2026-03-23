@@ -1,9 +1,9 @@
 
-public class Click implements Component {
-      void start(){
-        System.out.println("Cap Open , Pen is ready to write");
+public class Click implements OpenCloseStrategy {
+    public void open(){
+        System.out.println("Pen clicked, ready to write");
     }
-    void close(){
-        System.out.println("Pen close with Cap");
+    public void close(){
+        System.out.println("Pen clicked, closed");
     }
 }
