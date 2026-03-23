@@ -1,4 +1,5 @@
 
-public class Refill {
-    
+public interface  Refill {
+    boolean isEmpty();
+    void refill();
 }
