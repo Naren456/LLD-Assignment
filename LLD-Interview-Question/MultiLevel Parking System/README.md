@@ -1,5 +1,7 @@
 ## Multilevel Parking Lot Design Problem Statement
 
+![UML.jpg](UML.jpg)
+
 ## Design a multilevel parking lot system with the following requirements:
 ## Functional Requirements
 -The parking lot should support three types of parking slots:
