@@ -13,3 +13,7 @@ Thumbs.db
 tmp/
 out/
 build/
+
+/*/.idea/
+*/.vscode/
+*/.iml
