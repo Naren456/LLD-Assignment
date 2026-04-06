@@ -21,48 +21,6 @@ A flexible and extensible in-memory Distributed Cache implementation in Java. Th
    - `LRUEvictionPolicy`: Uses a Doubly Linked List and HashMap for O(1) performance.
 5. **`Database`**: A simple mock representing the persistent data store.
 
-### Class Diagram
-
-```mermaid
-classDiagram
-    class DistributedCache {
-        -List~CacheNode~ nodes
-        -DistributionStrategy strategy
-        -Database db
-        +get(key)
-        +put(key, value)
-    }
-    class CacheNode {
-        -String id
-        -Map~String, String~ storage
-        -EvictionPolicy evictionPolicy
-        -int capacity
-        +get(key)
-        +put(key, value)
-    }
-    class DistributionStrategy {
-        <<interface>>
-        +selectNode(key, numNodes)
-    }
-    class EvictionPolicy {
-        <<interface>>
-        +keyAccessed(key)
-        +keyAdded(key)
-        +evict()
-    }
-    class LRUEvictionPolicy {
-        -DoublyLinkedList list
-        +keyAccessed(key)
-        +keyAdded(key)
-        +evict()
-    }
-    
-    DistributedCache --> DistributionStrategy
-    DistributedCache --> CacheNode
-    CacheNode --> EvictionPolicy
-    LRUEvictionPolicy ..|> EvictionPolicy
-    ModuloDistributionStrategy ..|> DistributionStrategy
-```
 
 ## Getting Started
 
