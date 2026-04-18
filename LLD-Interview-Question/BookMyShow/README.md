@@ -1,101 +1,48 @@
-## Requirements :
+# BookMyShow - Low Level Design
 
-1. Functional Requirements (Core Use Cases)
-User Operations
-User should be able to:
-View movies in a city
-View theaters in a city
-View shows for a movie or theater
-View seat map for a show
-Select and lock seats
-Book tickets
-Make payment
-Cancel booking and get refund
+This project implements the core logic for a movie ticket booking platform.
 
-Admin Operations
-Admin should be able to:
-Add/update movies
-Add/update theaters
-Add screens in a theater
-Add shows for a screen
-Configure pricing rules
+![UML Diagram](uml.png)
 
-2. Core System Requirements
-System should support:
-Multiple cities
-Multiple theaters per city
-Multiple screens per theater
-Multiple shows per screen
-Each show should:
-Have a fixed seat layout
-Maintain seat availability
+## Design Overview
 
-3. Booking Flow Requirements
-User selects:
-City → Movie/Theater → Show
-System shows:
-Seat map with availability
-User selects seats:
-Seats should be temporarily locked
-User proceeds to payment:
-On success → booking confirmed
-On failure → seats released
+The system is designed following SOLID principles and utilizes the **Strategy Pattern** for flexible show pricing.
 
-4. Seat Locking & Concurrency
-When a user selects seats:
-Seats must be locked for a fixed duration (e.g., 5 minutes)
-System must ensure:
-No two users can book the same seat
-Handle concurrency using:
-Optimistic locking OR
-Pessimistic locking
+### Core Components
 
-5. Pricing Requirements
-Each seat has:
-Category (Silver, Gold, Platinum)
-Base price
-Final price should support:
-Show-based pricing
-Day/time-based pricing
-Demand-based surge pricing
+1.  **Theatre & Screen**: A city contains multiple theatres, each having multiple screens.
+2.  **Movie & Show**: Movies are played in theatres via Shows. Each show is linked to a specific screen and time.
+3.  **Seat & ShowSeat**: `Seat` represents the physical seat in a screen. `ShowSeat` represents the booking status (Available, Locked, Booked) of a seat for a specific show.
+4.  **Booking & Payment**: Orchestrates the ticket booking lifecycle, including temporary seat locking and payment processing.
 
-6. Payment Requirements
-System should:
-Integrate with external payment gateway
-Support multiple payment methods
-Payment states:
-INITIATED
-SUCCESS
-FAILED
+### Design Patterns
 
-7. Cancellation & Refund
-User can cancel booking:
-Before show time
-System should:
-Update booking status
-Trigger refund
+- **Strategy Pattern (Pricing)**: The `PricingStrategy` interface allows for different pricing models (Flat, Holiday, Dynamic) without modifying the `Show` or `Booking` logic.
+- **Service Layer**: Business logic is encapsulated in services like `BookingService` and `TheatreService` to maintain a clean separation from models.
 
-8. Data Consistency Requirements
-System must ensure:
-No double booking
-Seat state is always consistent
-Booking should be:
-Atomic (all seats booked or none)
+## Requirements
 
-9. Non-Functional (LLD-Relevant)
-Low latency for:
-Seat selection
-Booking
-High concurrency support
-Thread-safe operations
+### Functional Requirements
+- View movies and theatres in a city.
+- Check show timings and seat availability.
+- Temporarily lock seats during booking.
+- Confirm booking upon successful payment.
+- Handle cancellations and refunds.
 
+### Concurrency Support
+- The system ensures that no two users can book the same seat simultaneously using locking mechanisms (Optimistic/Pessimistic).
+- Seat locks have a configurable timeout (e.g., 5 minutes).
 
+## Getting Started
 
+### Prerequisites
+- JDK 8 or higher.
 
-10. Out of Scope (Explicit in Interview)
-Coupons / discounts
-Real-time seat updates across users
-Recommendation system
+### Running the Demo
+```bash
+# Compile
+javac -d out src/main/java/org/example/**/*.java src/main/java/org/example/*.java
 
-
-
+# Run
+java -cp out org.example.Main
+```

@@ -1,28 +1,41 @@
-# Design a Pen
+# Pen Design System
 
-## Requirements
-We need to build a Pen that can start, write, close, and be refilled.
+This project implements a flexible and extensible Pen design system in Java.
 
-![alt text](UML.png)
+![UML Diagram](uml.png)
 
-## How It Works Behind the Scenes
+## Design Overview
 
-Here is a quick breakdown of how the code is organized. The main goal was to keep things flexible and easy to update using some standard design patterns.
+The system is designed to handle various pen types and mechanisms while maintaining high modularity.
 
-### 1. The Strategy Pattern (How it opens and closes)
-Pens open in different ways—some click, some have caps, some twist. Instead of creating a messy family tree of classes (like `ClickGelPen` or `CapGelPen`), we pulled the opening/closing behavior out into its own thing called `OpenCloseStrategy`. The pen itself doesn't need to know *how* it opens; it just clicks or un-caps based on the strategy it was given.
+### Core Components
 
-### 2. Composition (Handling the ink)
-A pen isn't the ink itself; it *holds* the ink. By giving the pen a `Refill` object (like a `GelRefill` or `BallPointRefill`), we separate the physical pen from the ink supply. This makes it super easy to swap out ink types or check if it's empty without having to rewrite any of the core pen logic.
+1.  **Pen (Abstract Class)**: The foundation of all pens. It orchestrates the writing process and manages internal state like ink level and ready status.
+2.  **Refill (Interface)**: Encapsulates the ink storage and delivery logic.
+    - `BallPointRefill`, `GelRefill`, `InkRefill`: Specific implementations for different writing styles.
+3.  **OpenCloseStrategy (Interface)**: Defines how a pen is prepared for writing.
+    - `Cap`: Traditional cap-based mechanism.
+    - `Click`: Retractable click mechanism.
+4.  **GelPen**: A concrete implementation demonstrating how to extend the base `Pen`.
+5.  **PenFactory**: A specialized factory to build pens by correctly injecting the required `Refill` and `OpenCloseStrategy`.
 
-### 3. The Factory Pattern (Building the pen)
-Putting together a pen with the exact right refill and opening mechanism can get complicated. To keep the rest of our code clean, we use a `PenFactory`. You just tell the factory what you want (like a blue gel pen with a clicker), and it wires all the pieces together and hands you the finished product.
+## Design Patterns
 
-### 4. Abstraction (The blueprint)
-The `Pen` base class acts as the master blueprint. It keeps track of the basics, like whether the pen is open and what color the ink is. It also enforces the rules: you can't write if the pen is closed, and you definitely can't write if it's out of ink. Specific pens (like a `GelPen`) just build on top of this reliable foundation.
+- **Strategy Pattern**: Opening and closing logic is extracted into interchangeable strategies.
+- **Factory Pattern**: Centralizes the complex pen construction logic.
+- **Composition**: A `Pen` is composed of a `Refill` and a `Strategy`, rather than using deep inheritance trees.
 
-### Putting It All Together
-1. You ask the `PenFactory` for a pen, telling it exactly what features you want.
-2. The factory gathers the right `Refill` and `OpenCloseStrategy`.
-3. It builds the pen (like a `GelPen`), snaps all the parts inside, and hands it back to you.
-4. You just use the pen normally (`start()`, `write()`, `close()`), and the individual parts handle the heavy lifting behind the scenes.
+## Getting Started
+
+### Prerequisites
+- JDK 8 or higher.
+
+### Compilation
+```bash
+javac -d out src/main/java/org/example/**/*.java src/main/java/org/example/*.java
+```
+
+### Running the Demo
+```bash
+java -cp out org.example.Main
+```

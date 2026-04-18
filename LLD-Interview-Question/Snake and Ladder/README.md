@@ -1,24 +1,46 @@
-# Design a Snake and Ladder 
+# Snake and Ladder Game
 
+A modular and extensible Snake and Ladder game implementation in Java.
 
-## Requirements:
+![UML Diagram](uml.png)
 
-- Create a Snake and Ladder application.
-- The application should take input n(size of the board to be nxn), x(number of players), difficulty_level(easy/hard))  from the user.
-- There should be n snakes and n ladders placed randomly in the board.
-- Each snake will have its head at some number and its tail at a smaller number.
-- Each ladder will have its start position at some number and end position at a larger number.
+## Design Overview
+
+The game is designed with modularity in mind, allowing for different board configurations and game rules.
+
+### Core Components
+
+1.  **Game**: The main controller that manages the sequence of turns, players, and the board.
+2.  **Board**: Represents the play area. It maintains the positions of all snakes and ladders.
+3.  **Player**: Represents a participant in the game with a current position on the board.
+4.  **Snake & Ladder**: Entities that modify a player's position when encountered.
+5.  **Dice**: A component to generate random moves (typically 1-6).
+
+### Design Patterns
+
+- **Factory Pattern**: The `GameFactory` is used to create different variations of the game (e.g., Easy vs. Hard) with specific board layouts and rules.
+- **Strategy Pattern**: The `GameStrategy` interface encapsulates how snakes and ladders are placed and how the game level affects difficulty.
 
 ## Rules
-- The board has numbers from 1 to n^2.
-- The players will make there move turn-by-turn.
-- The game will have a six sided dice numbered from 1 to 6 and will always give a random number on rolling it.
-- Each player has a piece which is initially kept outside the board (i.e., at position 0).
-- Each player rolls the dice when their turn comes.
-- Based on the dice value, the player moves their piece forward that number of cells. Ex: If the dice value is 4 and the player is at position 7, the player will move to position 11 (7+4).
-- A player wins if he reached the last cell in the board.
-- Whenever a player ends up at a cell with the head of the snake, the player should go down to the cell that has the tail of that snake.
-- Whenever a player ends up at a cell with the start of the ladder, the player should go up to the cell that has the end of that ladder.
-- The game should continue till there are at least 2 players still playing to win.
-- After the dice roll, if a piece is supposed to move outside position 100, it does not move.
-Snakes and Ladders do not create a cycle.
+
+- The board consists of cells numbered from 1 to N^2.
+- Players start at position 0.
+- On each turn, a player rolls the dice and moves forward.
+- If a player lands on a Snake's head, they move down to its tail.
+- If a player lands on a Ladder's base, they move up to its top.
+- The first player to reach the final cell wins.
+- Move is ignored if it would take the player past the final cell.
+
+## Getting Started
+
+### Prerequisites
+- JDK 8 or higher.
+
+### Running the Demo
+```bash
+# Compile
+javac -d out code/*.java
+
+# Run
+java -cp out Main
+```
