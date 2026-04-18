@@ -1,3 +1,4 @@
+package org.example;
 import org.example.resource.Resource;
 import org.example.resource.RemoteResource;
 import org.example.proxy.RemoteResourceProxy;
