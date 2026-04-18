@@ -1,7 +1,5 @@
 package org.example.model;
 
-import org.example.strategy.GameStrategy;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +29,16 @@ public class Board {
 
     public List<Snake> getSnakes() { return snakes; }
     public List<Ladder> getLadders() { return ladders; }
+
+    public void addSnake(Snake snake) {
+        snakes.add(snake);
+        snakeMap.put(snake.getStart(), snake.getEnd());
+    }
+
+    public void addLadder(Ladder ladder) {
+        ladders.add(ladder);
+        ladderMap.put(ladder.getStart(), ladder.getEnd());
+    }
     public Map<Integer, Integer> getSnakeMap() { return snakeMap; }
     public Map<Integer, Integer> getLadderMap() { return ladderMap; }
     public int getSize() { return size; }
