@@ -1,9 +1,10 @@
 package org.example.service;
 
-import org.example.model.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import org.example.model.*;
 
 public class BookingService {
     private final PaymentService paymentService;
